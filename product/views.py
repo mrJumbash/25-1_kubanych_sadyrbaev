@@ -87,7 +87,7 @@ def category_detail_api_view(request, id):
 
 '''REVIEW'''
 
-@api_view(['GET', 'GET'])
+@api_view(['GET', 'POST'])
 def review_list_api_view(request):
     if request.method == 'GET':
         reviews = Review.objects.all()
