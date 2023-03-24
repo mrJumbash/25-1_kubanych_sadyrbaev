@@ -12,7 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     # rating = ReviewSerializer(many=True)
     class Meta:
         model = Product
-        fields = "id title price category_name".split()
+        fields = "id title description price category_name".split()
 
 
 class CategorySerializer(serializers.ModelSerializer):
