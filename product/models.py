@@ -2,6 +2,10 @@ from django.db import models
 
 # Create your models here.
 
+class Tag(models.Model):
+    title = models.CharField(max_length=20)
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -20,6 +24,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     @property
     def category_name(self):
