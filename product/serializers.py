@@ -35,6 +35,12 @@ class ValidateProductSerializer(serializers.Serializer):
     category_id = serializers.IntegerField()
     tags = serializers.ListField(child=serializers.IntegerField())
 
+    def create(self, validated_data):
+        return Product.objects.create(**validated_data)
+
+    # def update(self, instance, validated_data):
+
+
 
     '''EXTRA-TASK'''
     def validate_genres(self, tags):

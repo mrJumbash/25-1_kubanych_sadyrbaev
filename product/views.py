@@ -4,9 +4,23 @@ from rest_framework import status
 from product.models import Product, Category, Review
 from .serializers import *
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 
 
 '''PRODUCTS'''
+
+class ProductListAPIView(generics.ListCreateAPIView):
+    serializer_class = ProductSerializer
+    validate_serializer_class = ValidateProductSerializer
+    queryset = Product.objects.all()
+    pagination_class = PageNumberPagination
+
+class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    validate_serializer_class = ValidateProductSerializer
+    lookup_field = 'id'
+
 
 @api_view(['GET', 'POST'])
 def product_list_api_view(request):
@@ -47,7 +61,6 @@ def product_detail_api_view(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'PUT':
         serializer = ValidateProductSerializer(data=request.data)
-        serializer.is_valid()
         if not serializer.is_valid():
             return Response(data={'errors': serializer.errors},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -80,7 +93,6 @@ def category_list_api_view(request):
         return Response(data=serializer.data)
     else:
         serializer = ValidateCategorySerializer()
-        serializer.is_valid()
         if not serializer.is_valid():
             return Response(data={'errors': serializer.errors},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -108,7 +120,6 @@ def category_detail_api_view(request, id):
 
     elif request.method == 'PUT':
         serializer = ValidateCategorySerializer()
-        serializer.is_valid()
         if not serializer.is_valid():
             return Response(data={'errors': serializer.errors},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -128,7 +139,6 @@ def review_list_api_view(request):
 
     elif request.method == 'POST':
         serializer = ValidateReviewSerializer()
-        serializer.is_valid()
         if not serializer.is_valid():
             return Response(data={'errors': serializer.errors},
                             status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -156,7 +166,6 @@ def review_detail_api_view(request, id):
 
     else:
         serializer = ValidateReviewSerializer()
-        serializer.is_valid()
         if not serializer.is_valid():
             return Response(data={'errors': serializer.errors},
                             status=status.HTTP_406_NOT_ACCEPTABLE)

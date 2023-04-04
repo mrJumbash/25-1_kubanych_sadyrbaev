@@ -38,8 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken',
+    'users'
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'],
+    'PAGE_SIZE': 3
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
